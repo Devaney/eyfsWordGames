@@ -15,12 +15,18 @@
 <![endif]-->
 </head>
 <body>
-  <h1>Word Games</h1>
+  <div id="intro-wrap">
+  <h1>Red or Green</h1>
   <small>Is it red or green?</small>
-  <p>How quick are you?</p>
-  <menu>
-    <li><button type="button" class="btn btn-primary btn-lg">Start</button></li>
-  </menu>
+    <button type="button" class="btn btn-primary btn-lg" id="start-game" onclick="myGameStarter()">Start</button>
+  </div>
+  <div id="game-wrap">
+    <h2 id="current-word"></h2>
+    <button type="button" class="btn btn-danger btn-lg" id="red">Red</button>
+    <button type="button" class="btn btn-success btn-lg" id="green">Green</button>
+  </div>
+
+
 <p id="wordlist"></p>
 
 <script>
@@ -37,21 +43,34 @@ function readTextFile(file, callback) {
     rawFile.send(null);
 }
 
+// use to weakly randimise array
+function randomize(a, b) {
+    return Math.random() - 0.5;
+}
+
 // Calling the data
 readTextFile("data/eyfsWords.json", function(text){
-    var words = JSON.parse(text);
+    words = JSON.parse(text);
+    words.eyfsWords.sort(randomize);
 //    console.log(words);
 //    console.log(words.eyfsWords.length);
 
-
-
-// words.eyfsWords[1].word + " " + words.eyfsWords[1].colour;
-for (i = 0; i < words.eyfsWords.length; i++) { 
-document.getElementById("wordlist").innerHTML += "<p class="+ words.eyfsWords[i].colour + ">" + words.eyfsWords[i].word + " </p>" ;
-}
+    for (i = 0; i < words.eyfsWords.length; i++) { 
+        document.getElementById("current-word").innerHTML = "<p class="+ words.eyfsWords[i].colour + ">" + words.eyfsWords[i].word + " </p>" + i ;
+    }
 
 
 });
+
+function myGameStarter() {
+    document.getElementById("intro-wrap").style.display = 'none';
+    document.getElementById("game-wrap").style.display = 'block';
+    for (i = 0; i < words.eyfsWords.length; i++) { 
+        document.getElementById("current-word").innerHTML += "<p class="+ words.eyfsWords[i].colour + ">" + words.eyfsWords[i].word + " </p>" + i ;
+    }
+
+}
+
 </script>
 </body>
 </html> 

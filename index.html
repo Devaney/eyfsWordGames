@@ -14,62 +14,109 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
 <![endif]-->
 </head>
-<body>
+<body onload="getShuffledListOfWords()">
   <div id="intro-wrap">
-  <h1>Red or Green</h1>
-  <small>Is it red or green?</small>
-    <button type="button" class="btn btn-primary btn-lg" id="start-game" onclick="myGameStarter()">Start</button>
+  <h1>Is it a Red or Green word?</h1>
+    <button type="button" class="btn btn-primary btn-lg" id="start-game" onclick="getNewWord()">Start with 5 words</button>
   </div>
   <div id="game-wrap">
     <h2 id="current-word"></h2>
-    <button type="button" class="btn btn-danger btn-lg" id="red">Red</button>
-    <button type="button" class="btn btn-success btn-lg" id="green">Green</button>
+    <button type="button" class="btn btn-danger btn-lg" id="is_red">Red</button>
+    <button type="button" class="btn btn-success btn-lg" id="is_green">Green</button>
   </div>
-
 
 <p id="wordlist"></p>
 
 <script>
-// setting up the GET request
-function readTextFile(file, callback) {
-    var rawFile = new XMLHttpRequest();
-    rawFile.overrideMimeType("application/json");
-    rawFile.open("GET", file, true);
-    rawFile.onreadystatechange = function() {
-        if (rawFile.readyState === 4 && rawFile.status == "200") {
-            callback(rawFile.responseText);
+
+function getShuffledListOfWords(){
+
+    // setting up the GET request
+    function readTextFile(file, callback) {
+        var rawFile = new XMLHttpRequest();
+        rawFile.overrideMimeType("application/json");
+        rawFile.open("GET", file, true);
+        rawFile.onreadystatechange = function() {
+            if (rawFile.readyState === 4 && rawFile.status == "200") {
+                callback(rawFile.responseText);
+            }
         }
-    }
-    rawFile.send(null);
+        rawFile.send(null);
+    };
+    
+    // use to weakly randimise array
+    function randomize(a, b) {
+        return Math.random() - 0.5;
+    };
+    
+    // Calling the data
+    readTextFile("data/eyfsWords.json", function(text){
+        words = JSON.parse(text);
+        words.eyfsWords.sort(randomize);
+    //    console.log(words);
+    //    console.log(words.eyfsWords.length);
+    //    for (i = 0; i < words.eyfsWords.length; i++) { 
+    //        document.getElementById("current-word").innerHTML = "<p class="+ words.eyfsWords[i].colour + ">" + words.eyfsWords[i].word + " </p>" + i ;
+    //    }
+
+    });//readTextFile
+
+};//getShuffledListOfWords
+
+var correct_answers = 95;
+//var word_colour = words.eyfsWords[correct_answers].colour;
+//var current_word = words.eyfsWords[correct_answers].word;
+
+
+function getNewWord(){
+document.getElementById("current-word").innerHTML = "<p class="+ words.eyfsWords[correct_answers].colour + ">" + words.eyfsWords[correct_answers].word + " </p>";
+document.getElementById("intro-wrap").style.display = 'none';
+document.getElementById("game-wrap").style.display = 'block';
+document.getElementById("is_"+words.eyfsWords[correct_answers].colour).className += " correct_answer_btn";
+
+document.getElementById("is_red").onclick = answer;
+document.getElementById("is_green").onclick = answer;
+};
+
+function answer(){
+    if (this.classList.contains("correct_answer_btn")) {
+        console.log("Correct");
+        correct_answers++; //Add 1 to correct answers
+        this.classList.remove("correct_answer_btn");
+        if (correct_answers == words.eyfsWords.length) {
+            console.log("Game over");
+            endGame();
+        } else{
+        console.log("New word");
+        getNewWord();
+        };
+    } else{
+        console.log("Incorrect");
+
+    };
+}; // function answer()
+
+function endGame(){
+console.log("EndersGame");
+document.getElementById("is_red").style.display = 'none';
+document.getElementById("is_green").style.display = 'none';
+document.getElementById("current-word").innerHTML = "<h1>You did it, can you do it faster?</h1>";
+
 }
 
-// use to weakly randimise array
-function randomize(a, b) {
-    return Math.random() - 0.5;
-}
-
-// Calling the data
-readTextFile("data/eyfsWords.json", function(text){
-    words = JSON.parse(text);
-    words.eyfsWords.sort(randomize);
-//    console.log(words);
-//    console.log(words.eyfsWords.length);
-
-    for (i = 0; i < words.eyfsWords.length; i++) { 
-        document.getElementById("current-word").innerHTML = "<p class="+ words.eyfsWords[i].colour + ">" + words.eyfsWords[i].word + " </p>" + i ;
-    }
+//function startTimer (){
+//  //Display timer
+//};
 
 
-});
 
-function myGameStarter() {
-    document.getElementById("intro-wrap").style.display = 'none';
-    document.getElementById("game-wrap").style.display = 'block';
-    for (i = 0; i < words.eyfsWords.length; i++) { 
-        document.getElementById("current-word").innerHTML += "<p class="+ words.eyfsWords[i].colour + ">" + words.eyfsWords[i].word + " </p>" + i ;
-    }
 
-}
+//   document.getElementById("intro-wrap").style.display = 'none';
+//    document.getElementById("game-wrap").style.display = 'block';
+//    for (i = 0; i < words.eyfsWords.length; i++) { 
+//        document.getElementById("current-word").innerHTML += "<p class="+ words.eyfsWords[i].colour + ">" + words.eyfsWords[i].word + " </p>" + i ;
+//    }
+
 
 </script>
 </body>

@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Red Green Word Game</title>
   <meta name="description" content="Red Green Word Game">
   <meta name="author" content="Liam Devaney">
@@ -15,21 +16,36 @@
   <![endif]-->
 </head>
 <body onload="getShuffledListOfWords()">
-
+<div class="stage-wrap" onload="">
   <div id="intro-wrap">
-  <h1>Is it a Red or Green word?</h1>
-    <button type="button" class="btn btn-primary btn-lg" id="start-game" onclick="getNewWord()">Start with 5 words</button>
+    <h1 id="initial-intro"><span class="red-me">Red Word</span> or <span class="green-me">Green word</span></h1>
+    <div class="start-btn-wrap">
+      <button type="button" class="btn btn-block btn-primary btn-lg" id="start-game" onclick="getNewWord(),  selection_snd.play(), clearTimer(), timerStart()">Start<br>10 words</button>
+    </div>
   </div>
 
   <div id="game-wrap">
+    <div id="back-btn"><a href="#" class="btn btn-default" onclick="restartGame()">Back</a></div>
+    <div class="timer" id="timer">0 minutes 0 seconds</div>
     <h2 id="current-word"></h2>
-    <button type="button" class="btn btn-danger btn-lg" id="is_red">Red</button>
-    <button type="button" class="btn btn-success btn-lg" id="is_green">Green</button>
+    <div class="answer-btn-wrap">
+      <button type="button" class="btn btn-danger btn-lg" id="is_red">Red</button>
+      <button type="button" class="btn btn-success btn-lg" id="is_green">Green</button>
+    </div>
   </div>
 
+</div>
 <script>
 
-function getShuffledListOfWords(){
+var welcome_snd = new Audio("sounds/intro-music.wav"); // buffers automatically when created
+var selection_snd = new Audio("sounds/selection.mp3"); // buffers automatically when created
+var correct_snd = new Audio("sounds/correct.mp3"); // buffers automatically when created
+var wrong_snd = new Audio("sounds/wrong.mp3"); // buffers automatically when created 
+var end_snd = new Audio("sounds/end-sound.mp3"); // buffers automatically when created 
+welcome_snd.loop = true;
+//welcome_snd.play();
+
+function getShuffledListOfWords() {
     // setting up the GET request
     function readTextFile(file, callback) {
         var rawFile = new XMLHttpRequest();
@@ -56,12 +72,12 @@ function getShuffledListOfWords(){
 
 };//getShuffledListOfWords
 
-var correct_answers = 95;
+var correct_answers = 90;
 //var word_colour = words.eyfsWords[correct_answers].colour;
 //var current_word = words.eyfsWords[correct_answers].word;
 
-function getNewWord(){
-    document.getElementById("current-word").innerHTML = "<p class="+ words.eyfsWords[correct_answers].colour + ">" + words.eyfsWords[correct_answers].word + " </p>";
+function getNewWord() {
+    document.getElementById("current-word").innerHTML = "<p>" + words.eyfsWords[correct_answers].word + " </p>";// class="+ words.eyfsWords[correct_answers].colour + "
     document.getElementById("intro-wrap").style.display = 'none';
     document.getElementById("game-wrap").style.display = 'block';
     document.getElementById("is_"+words.eyfsWords[correct_answers].colour).className += " correct_answer_btn";
@@ -69,34 +85,61 @@ function getNewWord(){
     document.getElementById("is_green").onclick = answer;
 };
 
-function answer(){
+function answer() {
     if (this.classList.contains("correct_answer_btn")) {
-        console.log("Correct");
+        correct_snd.play();
         correct_answers++; //Add 1 to correct answers
         this.classList.remove("correct_answer_btn");
         if (correct_answers == words.eyfsWords.length) {
-            console.log("Game over");
             endGame();
         } else{
-        console.log("New word");
         getNewWord();
         };
     } else{
-        console.log("Incorrect");
-
+        wrong_snd.play();
     };
 }; // function answer()
 
-function endGame(){
-    console.log("EndersGame");
-    document.getElementById("is_red").style.display = 'none';
-    document.getElementById("is_green").style.display = 'none';
-    document.getElementById("current-word").innerHTML = "<h1>You did it, can you do it faster?</h1>";
-}
+function endGame() {
+    usersTime = document.getElementById("timer").innerHTML;
+    document.getElementById("intro-wrap").style.display = 'block';
+    document.getElementById("game-wrap").style.display = 'none';
+    document.getElementById("initial-intro").innerHTML = "Well done<br>You did it in<br>" + usersTime;
+    correct_answers = 90;
+    end_snd.play();
+    stopTimer();
+};
 
-//function startTimer (){
-//  //Display timer
-//};
+function restartGame() {
+    correct_answers = 90;
+    document.getElementById("intro-wrap").style.display = 'block';
+    document.getElementById("game-wrap").style.display = 'none'; 
+    stopTimer();
+    clearTimer();
+};
+
+
+function timerStart() {
+timerVar = setInterval(countStart, 1000);
+totalSeconds = 0;
+function countStart() {
+    ++totalSeconds;
+    var hour = Math.floor(totalSeconds /3600);
+    var minute = Math.floor((totalSeconds - hour*3600)/60);
+    var seconds = totalSeconds - (hour*3600 + minute*60);
+    document.getElementById("timer").innerHTML = minute + " minutes " + seconds + " seconds";
+};
+};
+
+function clearTimer() {
+    totalSeconds = 0;
+    document.getElementById("timer").innerHTML = " 0 minutes 0 seconds";
+};
+
+function stopTimer() {
+    clearInterval(timerVar);
+};
+
 
 </script>
 </body>

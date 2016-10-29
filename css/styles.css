@@ -13,6 +13,50 @@ table{border-collapse:collapse;border-spacing:0}
 html {box-sizing: border-box;}
 *, *:before, *:after {box-sizing: inherit;}
 
+div.stage-wrap {
+	width: 100%;
+	padding: 13px;
+	min-width: 320px;
+	min-height: 400px;
+	display: block;
+}
+
+.answer-btn-wrap,
+.start-btn-wrap {
+	bottom: 13px;
+    position: absolute;
+    left: 13px;
+    right: 13px;
+}
+
+#is_red,
+#is_green {
+  width: 45%;
+  margin: 2%
+}
+
+#intro-wrap h1,
+h2#current-word {
+  text-align: center;
+  width: 100%;
+  margin-top: 13vh;
+  font-size: 55px;
+}
+
+h2#current-word {
+  margin-top: 34vh;
+}
+
+#intro-wrap h1 span.red-me {
+  color: red;
+  display: inline-block;
+}
+
+#intro-wrap h1 span.green-me {
+  color: green;
+  display: inline-block;
+}
+
 #game-wrap {
   display: none;
 }
@@ -27,4 +71,15 @@ p.red {
 
 p.green {
 	color: green;
+}
+
+.timer {
+	    position: absolute;
+    top: 58px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 31px;
+    color: #95aab6;
+    z-index: -1;
 }

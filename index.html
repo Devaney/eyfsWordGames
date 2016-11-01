@@ -27,7 +27,30 @@
   <div id="game-wrap">
     <div id="back-btn"><a href="#" class="btn btn-default" onclick="restartGame()">Back</a></div>
     <div class="timer" id="timer">0 minutes 0 seconds</div>
+    <div class="error-screen-block" id="error-screen-block">X
+      <div class="sad">
+  <div class="container">
+    <div>:(</div>
+  </div><!-- .container -->
+</div></div>
     <h2 id="current-word"></h2>
+    <div id="happy-face-animation">
+        <div class="container">
+  <div class="one">;)</div>
+</div><!-- .container -->
+<div class="container">
+  <div class="two">:)</div>
+</div><!-- .container -->
+<div class="container">
+  <div class="three">:D</div>
+</div><!-- .container -->
+<div class="container">
+  <div class="four">:)</div>
+</div><!-- .container -->
+<div class="container">
+  <div class="five">:*</div>
+</div><!-- .container -->
+    </div>
     <div class="answer-btn-wrap">
       <button type="button" class="btn btn-danger btn-lg" id="is_red">Red</button>
       <button type="button" class="btn btn-success btn-lg" id="is_green">Green</button>
@@ -44,6 +67,7 @@ var wrong_snd = new Audio("sounds/wrong.mp3"); // buffers automatically when cre
 var end_snd = new Audio("sounds/end-sound.mp3"); // buffers automatically when created 
 welcome_snd.loop = true;
 //welcome_snd.play();
+
 
 function getShuffledListOfWords() {
     // setting up the GET request
@@ -89,6 +113,9 @@ function answer() {
     if (this.classList.contains("correct_answer_btn")) {
         correct_snd.play();
         correct_answers++; //Add 1 to correct answers
+        document.getElementById('happy-face-animation').style.display='block';
+        setTimeout(function () {
+            document.getElementById('happy-face-animation').style.display='none'}, 2000);
         this.classList.remove("correct_answer_btn");
         if (correct_answers == words.eyfsWords.length) {
             endGame();
@@ -97,6 +124,10 @@ function answer() {
         };
     } else{
         wrong_snd.play();
+        document.getElementById('error-screen-block').style.display='block';
+        setTimeout(function () {
+            document.getElementById('error-screen-block').style.display='none'},
+            4000);
     };
 }; // function answer()
 

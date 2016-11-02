@@ -19,14 +19,20 @@
 <div class="stage-wrap" onload="">
   <div id="intro-wrap">
     <h1 id="initial-intro"><span class="red-me">Red Word</span> or <span class="green-me">Green word</span></h1>
+    <div>
+      <table id="results-table">
+      <thead></thead>
+      <tbody></tbody>  
+      </table>
+    </div>
     <div class="start-btn-wrap">
-      <button type="button" class="btn btn-block btn-primary btn-lg" id="start-game" onclick="getNewWord(),  selection_snd.play(), clearTimer(), timerStart()">Start<br>10 words</button>
+      <button type="button" class="btn btn-block btn-primary btn-lg" id="start-game" onclick="getShuffledListOfWords(), getNewWord(),  selection_snd.play(), clearTimer(), timerStart()">Start<br>10 words</button>
     </div>
   </div>
 
   <div id="game-wrap">
     <div id="back-btn"><a href="#" class="btn btn-default" onclick="restartGame()">Back</a></div>
-    <div class="timer" id="timer">0 minutes 0 seconds</div>
+    <div class="timer" id="timer">0 seconds</div>
     <div class="error-screen-block" id="error-screen-block">X
       <div class="sad">
   <div class="container">
@@ -60,14 +66,27 @@
 </div>
 <script>
 
-var welcome_snd = new Audio("sounds/intro-music.wav"); // buffers automatically when created
-var selection_snd = new Audio("sounds/selection.mp3"); // buffers automatically when created
-var correct_snd = new Audio("sounds/correct.mp3"); // buffers automatically when created
-var wrong_snd = new Audio("sounds/wrong.mp3"); // buffers automatically when created 
-var end_snd = new Audio("sounds/end-sound.mp3"); // buffers automatically when created 
-welcome_snd.loop = true;
-//welcome_snd.play();
+function addResultsTableRow(tableID, cellOne, cellTwo) {
+  // Get a reference to the table
+  var tableRef = document.getElementById(tableID);
+  var newRow = tableRef.insertRow(0);
 
+  var newCell = newRow.insertCell(0);
+  var newText = document.createTextNode(cellOne);
+  newCell.appendChild(newText);
+
+  var secondNewCell = newRow.insertCell(1);
+  var secondNewText = document.createTextNode(cellTwo);
+  secondNewCell.appendChild(secondNewText);
+};
+
+var selection_snd = new Audio("sounds/selection.mp3");
+var correct_snd = new Audio("sounds/correct.mp3");
+var wrong_snd = new Audio("sounds/wrong.mp3"); 
+var end_snd = new Audio("sounds/end-sound.mp3"); 
+//var welcome_snd = new Audio("sounds/intro-music.wav");
+//welcome_snd.loop = true;
+//welcome_snd.play();
 
 function getShuffledListOfWords() {
     // setting up the GET request
@@ -83,7 +102,6 @@ function getShuffledListOfWords() {
         rawFile.send(null);
     };
     
-    // use to weakly randimise array
     function randomize(a, b) {
         return Math.random() - 0.5;
     };
@@ -97,10 +115,19 @@ function getShuffledListOfWords() {
 };//getShuffledListOfWords
 
 var correct_answers = 90;
-//var word_colour = words.eyfsWords[correct_answers].colour;
-//var current_word = words.eyfsWords[correct_answers].word;
 
 function getNewWord() {
+    var roundSeconds = 0;
+    roundTimeVar = setInterval(roundCountStart, 1000);
+
+    function roundCountStart() {
+        ++roundSeconds;
+        var roundHour = Math.floor(roundSeconds /3600);
+        var roundMinute = Math.floor((roundSeconds - roundHour*3600)/60);
+        endRoundTime = roundSeconds;
+    };
+
+
     document.getElementById("current-word").innerHTML = "<p>" + words.eyfsWords[correct_answers].word + " </p>";// class="+ words.eyfsWords[correct_answers].colour + "
     document.getElementById("intro-wrap").style.display = 'none';
     document.getElementById("game-wrap").style.display = 'block';
@@ -112,10 +139,10 @@ function getNewWord() {
 function answer() {
     if (this.classList.contains("correct_answer_btn")) {
         correct_snd.play();
+        addResultsTableRow('results-table', words.eyfsWords[correct_answers].word, endRoundTime);
         correct_answers++; //Add 1 to correct answers
         document.getElementById('happy-face-animation').style.display='block';
-        setTimeout(function () {
-            document.getElementById('happy-face-animation').style.display='none'}, 2000);
+        setTimeout(function () {document.getElementById('happy-face-animation').style.display='none'}, 2000);
         this.classList.remove("correct_answer_btn");
         if (correct_answers == words.eyfsWords.length) {
             endGame();
@@ -144,22 +171,24 @@ function endGame() {
 function restartGame() {
     correct_answers = 90;
     document.getElementById("intro-wrap").style.display = 'block';
-    document.getElementById("game-wrap").style.display = 'none'; 
+    document.getElementById("game-wrap").style.display = 'none';
+    document.getElementById("is_red").classList.remove("correct_answer_btn");
+    document.getElementById("is_green").classList.remove("correct_answer_btn");
     stopTimer();
     clearTimer();
 };
 
 
 function timerStart() {
-timerVar = setInterval(countStart, 1000);
-totalSeconds = 0;
-function countStart() {
-    ++totalSeconds;
-    var hour = Math.floor(totalSeconds /3600);
-    var minute = Math.floor((totalSeconds - hour*3600)/60);
-    var seconds = totalSeconds - (hour*3600 + minute*60);
-    document.getElementById("timer").innerHTML = minute + " minutes " + seconds + " seconds";
-};
+    timerVar = setInterval(countStart, 1000);
+    totalSeconds = 0;
+    function countStart() {
+        ++totalSeconds;
+        var hour = Math.floor(totalSeconds /3600);
+        var minute = Math.floor((totalSeconds - hour*3600)/60);
+        var seconds = totalSeconds;
+        document.getElementById("timer").innerHTML = seconds + " seconds";
+    };
 };
 
 function clearTimer() {
@@ -170,7 +199,6 @@ function clearTimer() {
 function stopTimer() {
     clearInterval(timerVar);
 };
-
 
 </script>
 </body>

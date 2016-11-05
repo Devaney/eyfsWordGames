@@ -53,6 +53,7 @@ function getNewWord() {
     var roundSeconds = 0;
     roundTimeVar = setInterval(roundCountStart, 1000);
 
+// FIXME First word to appear in results table is different from the first word shown
     function roundCountStart() {
         ++roundSeconds;
         var roundHour = Math.floor(roundSeconds /3600);
@@ -132,3 +133,24 @@ function clearTimer() {
 function stopTimer() {
     clearInterval(timerVar);
 };
+
+//sorting the results table
+// // Table data sorting starts....
+//   function sortData() {
+//       // Read table body node.
+//       var tableData = document.getElementById('data_table').getElementsByTagName('tbody').item(0);
+
+//       // Read table row nodes.
+//       var rowData = tableData.getElementsByTagName('tr'); 
+
+//       for(var i = 0; i < rowData.length - 1; i++) {
+//           for(var j = 0; j < rowData.length - (i + 1); j++) {
+
+//               //Swap row nodes if short condition matches
+//               if(parseInt(rowData.item(j).getElementsByTagName('td').item(0).innerHTML) > parseInt(rowData.item(j+1).getElementsByTagName('td').item(0).innerHTML)) {
+//                   tableData.insertBefore(rowData.item(j+1),rowData.item(j));
+//               }
+//           }
+//       }
+//   }
+//   // Table data sorting ends....

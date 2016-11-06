@@ -13,6 +13,21 @@ table{border-collapse:collapse;border-spacing:0}
 html {box-sizing: border-box;}
 *, *:before, *:after {box-sizing: inherit;}
 
+.left-column,
+.right-column {
+  width: 46%;
+  padding: 0;
+  margin: 1%;
+  float: left;
+}
+.right-column {
+  float: right;
+}
+
+#results-table {
+  display: none;
+}
+
 div.stage-wrap {
 	width: 100%;
 	padding: 13px;

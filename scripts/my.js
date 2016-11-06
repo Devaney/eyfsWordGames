@@ -1,6 +1,5 @@
-debug = false;
+debug = true;
 
-wordStartCount = 75;
 var selection_snd = new Audio("sounds/selection.mp3");
 var correct_snd = new Audio("sounds/correct.mp3");
 var wrong_snd = new Audio("sounds/wrong.mp3"); 
@@ -35,10 +34,9 @@ function getShuffledListOfWords() {
 
 };//getShuffledListOfWords
 
-var correct_answers = wordStartCount;
-
-function startGame() {
-    //getShuffledListOfWords();
+function startGame(a) {
+    wordStartCount = parseInt(a);
+    correct_answers = wordStartCount;
     getNewWord();
     selection_snd.play();
     clearTimer();
@@ -47,7 +45,7 @@ function startGame() {
 
 function getNewWord() {
     roundSeconds = 0;
-    roundTimeVar = setInterval(roundCountStart, 100);
+    roundTimeVar = setInterval(roundCountStart, 1000);
 
     if (debug == true) {
     document.getElementById("current-word").innerHTML = "<p class='"+ words.eyfsWords[correct_answers].colour + "'>" + words.eyfsWords[correct_answers].word + " </p>";

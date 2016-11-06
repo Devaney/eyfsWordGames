@@ -24,7 +24,14 @@
         </table>
       </div>
       <div class="start-btn-wrap">
-        <button type="button" class="btn btn-block btn-primary btn-lg" id="start-game" onclick="startGame()">Start<br>10 words</button>
+        <div class="left-column">
+          <button type="button" class="btn btn-block btn-primary" id="start-game-10" onclick="startGame(90)">10 words</button>
+          <button type="button" class="btn btn-block btn-primary" id="start-game-60" onclick="startGame(40)">60 words</button>
+        </div>
+        <div class="right-column">
+          <button type="button" class="btn btn-block btn-primary" id="start-game-30" onclick="startGame(70)">30 words</button>
+          <button type="button" class="btn btn-block btn-primary" id="start-game-100" onclick="startGame(0)">100 words</button>
+        </div>
       </div>
     </div>
 

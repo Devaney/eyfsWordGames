@@ -43,6 +43,14 @@ function startGame(a) {
     timerStart();    
 };
 
+function listWords() {
+    document.getElementById("intro-wrap").style.display = 'none';
+    document.getElementById("word-list-wrap").style.display = 'block';
+    for (var i = 0; i < words.eyfsWords.length ; i++) {
+    document.getElementById("word-list").innerHTML += "<p class='"+ words.eyfsWords[i].colour + "'>" + words.eyfsWords[i].word + " </p><br>";
+    };
+};
+
 function getNewWord() {
     roundSeconds = 0;
     roundTimeVar = setInterval(roundCountStart, 1000);
@@ -93,16 +101,15 @@ function endGame() {
     document.getElementById("game-wrap").style.display = 'none';
     document.getElementById("initial-intro").innerHTML = "Well done<br>You did it in<br>" + usersTime;
     document.getElementById("initial-intro").style.fontSize = "34px";
-    correct_answers = wordStartCount;
     end_snd.play();
     stopTimer();
     getShuffledListOfWords();
 };
 
 function restartGame() {
-    correct_answers = wordStartCount;
     document.getElementById("intro-wrap").style.display = 'block';
     document.getElementById("game-wrap").style.display = 'none';
+    document.getElementById("word-list-wrap").style.display = 'none';
     document.getElementById("is_red").classList.remove("correct_answer_btn");
     document.getElementById("is_green").classList.remove("correct_answer_btn");
     stopTimer();

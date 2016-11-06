@@ -24,6 +24,8 @@ html {box-sizing: border-box;}
   float: right;
 }
 
+
+#word-list-wrap,
 #results-table {
   display: none;
 }

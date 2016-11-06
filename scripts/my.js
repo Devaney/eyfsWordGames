@@ -1,17 +1,6 @@
+debug = false;
 
-function addResultsTableRow(tableID, cellOne, cellTwo) {
-  // Get a reference to the table
-  var tableRef = document.getElementById(tableID);
-  var newRow = tableRef.insertRow(0);
-
-  var newCell = newRow.insertCell(0);
-  var newText = document.createTextNode(cellOne);
-  newCell.appendChild(newText);
-
-  var secondNewCell = newRow.insertCell(1);
-  var secondNewText = document.createTextNode(cellTwo);
-  secondNewCell.appendChild(secondNewText);
-};
+wordStartCount = 95;
 
 var selection_snd = new Audio("sounds/selection.mp3");
 var correct_snd = new Audio("sounds/correct.mp3");
@@ -47,27 +36,36 @@ function getShuffledListOfWords() {
 
 };//getShuffledListOfWords
 
-var correct_answers = 90;
+var correct_answers = wordStartCount;
+
+function startGame() {
+    //getShuffledListOfWords();
+    getNewWord();
+    selection_snd.play();
+    clearTimer();
+    timerStart();    
+};
 
 function getNewWord() {
-    var roundSeconds = 0;
-    roundTimeVar = setInterval(roundCountStart, 1000);
+    roundSeconds = 0;
+    roundTimeVar = setInterval(roundCountStart, 100);
 
-// FIXME First word to appear in results table is different from the first word shown
-    function roundCountStart() {
-        ++roundSeconds;
-        var roundHour = Math.floor(roundSeconds /3600);
-        var roundMinute = Math.floor((roundSeconds - roundHour*3600)/60);
-        endRoundTime = roundSeconds;
+    if (debug == true) {
+    document.getElementById("current-word").innerHTML = "<p class='"+ words.eyfsWords[correct_answers].colour + "'>" + words.eyfsWords[correct_answers].word + " </p>";
+    } else{
+          document.getElementById("current-word").innerHTML = "<p>" + words.eyfsWords[correct_answers].word + " </p>";
     };
 
-
-    document.getElementById("current-word").innerHTML = "<p>" + words.eyfsWords[correct_answers].word + " </p>";// class="+ words.eyfsWords[correct_answers].colour + "
     document.getElementById("intro-wrap").style.display = 'none';
     document.getElementById("game-wrap").style.display = 'block';
     document.getElementById("is_"+words.eyfsWords[correct_answers].colour).className += " correct_answer_btn";
     document.getElementById("is_red").onclick = answer;
     document.getElementById("is_green").onclick = answer;
+};
+
+function roundCountStart() {
+    ++roundSeconds;
+    endRoundTime = roundSeconds;
 };
 
 function answer() {
@@ -77,6 +75,7 @@ function answer() {
         correct_answers++; //Add 1 to correct answers
         document.getElementById('happy-face-animation').style.display='block';
         setTimeout(function () {document.getElementById('happy-face-animation').style.display='none'}, 2000);
+    clearInterval(roundTimeVar);
         this.classList.remove("correct_answer_btn");
         if (correct_answers == words.eyfsWords.length) {
             endGame();
@@ -86,9 +85,7 @@ function answer() {
     } else{
         wrong_snd.play();
         document.getElementById('error-screen-block').style.display='block';
-        setTimeout(function () {
-            document.getElementById('error-screen-block').style.display='none'},
-            4000);
+        setTimeout(function () {document.getElementById('error-screen-block').style.display='none'}, 4000);
     };
 }; // function answer()
 
@@ -97,13 +94,14 @@ function endGame() {
     document.getElementById("intro-wrap").style.display = 'block';
     document.getElementById("game-wrap").style.display = 'none';
     document.getElementById("initial-intro").innerHTML = "Well done<br>You did it in<br>" + usersTime;
-    correct_answers = 90;
+    correct_answers = wordStartCount;
     end_snd.play();
     stopTimer();
+    getShuffledListOfWords();
 };
 
 function restartGame() {
-    correct_answers = 90;
+    correct_answers = wordStartCount;
     document.getElementById("intro-wrap").style.display = 'block';
     document.getElementById("game-wrap").style.display = 'none';
     document.getElementById("is_red").classList.remove("correct_answer_btn");
@@ -112,14 +110,11 @@ function restartGame() {
     clearTimer();
 };
 
-
 function timerStart() {
     timerVar = setInterval(countStart, 1000);
     totalSeconds = 0;
     function countStart() {
         ++totalSeconds;
-        var hour = Math.floor(totalSeconds /3600);
-        var minute = Math.floor((totalSeconds - hour*3600)/60);
         var seconds = totalSeconds;
         document.getElementById("timer").innerHTML = seconds + " seconds";
     };
@@ -127,11 +122,26 @@ function timerStart() {
 
 function clearTimer() {
     totalSeconds = 0;
-    document.getElementById("timer").innerHTML = " 0 minutes 0 seconds";
+    document.getElementById("timer").innerHTML = "0 seconds";
 };
 
 function stopTimer() {
     clearInterval(timerVar);
+    clearInterval(roundTimeVar);
+};
+
+function addResultsTableRow(tableID, cellOne, cellTwo) {
+    // Get a reference to the table
+    var tableRef = document.getElementById(tableID);
+    var newRow = tableRef.insertRow(0);
+
+    var newCell = newRow.insertCell(0);
+    var newText = document.createTextNode(cellOne);
+    newCell.appendChild(newText);
+
+    var secondNewCell = newRow.insertCell(1);
+    var secondNewText = document.createTextNode(cellTwo);
+    secondNewCell.appendChild(secondNewText);
 };
 
 //sorting the results table

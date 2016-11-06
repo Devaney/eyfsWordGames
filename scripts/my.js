@@ -49,7 +49,8 @@ function getNewWord() {
 
     if (debug == true) {
     document.getElementById("current-word").innerHTML = "<p class='"+ words.eyfsWords[correct_answers].colour + "'>" + words.eyfsWords[correct_answers].word + " </p>";
-    } else{
+    document.getElementById("results-table").style.display = 'block';
+        } else{
           document.getElementById("current-word").innerHTML = "<p>" + words.eyfsWords[correct_answers].word + " </p>";
     };
 
@@ -91,6 +92,7 @@ function endGame() {
     document.getElementById("intro-wrap").style.display = 'block';
     document.getElementById("game-wrap").style.display = 'none';
     document.getElementById("initial-intro").innerHTML = "Well done<br>You did it in<br>" + usersTime;
+    document.getElementById("initial-intro").style.fontSize = "34px";
     correct_answers = wordStartCount;
     end_snd.play();
     stopTimer();

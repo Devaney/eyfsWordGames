@@ -1,7 +1,6 @@
 debug = false;
 
-wordStartCount = 95;
-
+wordStartCount = 75;
 var selection_snd = new Audio("sounds/selection.mp3");
 var correct_snd = new Audio("sounds/correct.mp3");
 var wrong_snd = new Audio("sounds/wrong.mp3"); 
@@ -65,7 +64,7 @@ function getNewWord() {
 
 function roundCountStart() {
     ++roundSeconds;
-    endRoundTime = roundSeconds;
+    endRoundTime = roundSeconds;//FIXME Round time is incorrect for the words
 };
 
 function answer() {

@@ -8,61 +8,60 @@
   <meta name="description" content="Red Green Word Game">
   <meta name="author" content="Liam Devaney">
   <link rel="stylesheet" href="css/styles.css?v=25-10-16">
-  <link rel="stylesheet" href="css/bootstrap.css?v=25-10-16">
-  <link rel="stylesheet" href="css/bootstrap-theme.css?v=25-10-16">
+  <link rel="stylesheet" href="css/bootstrap.min.css?v=25-10-16">
+  <link rel="stylesheet" href="css/bootstrap-theme.min.css?v=25-10-16">
   <script src="scripts/my.js"></script>
-  <!--[if lt IE 9]>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
-  <![endif]-->
+<!--[if lt IE 9]>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+<![endif]-->
 </head>
 <body onload="getShuffledListOfWords()">
-<div class="stage-wrap" onload="">
-  <div id="intro-wrap">
-    <h1 id="initial-intro"><span class="red-me">Red Word</span> or <span class="green-me">Green word</span></h1>
-    <div>
-      <table id="results-table">
-      <thead></thead>
-      <tbody></tbody>  
-      </table>
+  <div class="stage-wrap" onload="">
+    <div id="intro-wrap">
+      <h1 id="initial-intro"><span class="red-me">Red Word</span> or <span class="green-me">Green word</span></h1>
+      <div>
+        <table class="table table-striped" id="results-table">
+        </table>
+      </div>
+      <div class="start-btn-wrap">
+        <button type="button" class="btn btn-block btn-primary btn-lg" id="start-game" onclick="startGame()">Start<br>10 words</button>
+      </div>
     </div>
-    <div class="start-btn-wrap">
-      <button type="button" class="btn btn-block btn-primary btn-lg" id="start-game" onclick="startGame()">Start<br>10 words</button>
-    </div>
-  </div>
 
-  <div id="game-wrap">
-    <div id="back-btn"><a href="#" class="btn btn-default" onclick="restartGame()">Back</a></div>
-    <div class="timer" id="timer">0 seconds</div>
-    <div class="error-screen-block" id="error-screen-block">X
-      <div class="sad">
-  <div class="container">
-    <div>:(</div>
-  </div><!-- .container -->
-</div></div>
-    <h2 id="current-word"></h2>
-    <div id="happy-face-animation">
+    <div id="game-wrap">
+      <div id="back-btn"><a href="#" class="btn btn-default" onclick="restartGame()">Back</a></div>
+      <div class="timer" id="timer">0 seconds</div>
+      <div class="error-screen-block" id="error-screen-block">X
+        <div class="sad">
+          <div class="container">
+            <div>:(</div>
+          </div><!-- .container -->
+        </div>
+      </div>
+      <h2 id="current-word"></h2>
+      <div id="happy-face-animation">
         <div class="container">
-  <div class="one">;)</div>
-</div><!-- .container -->
-<div class="container">
-  <div class="two">:)</div>
-</div><!-- .container -->
-<div class="container">
-  <div class="three">:D</div>
-</div><!-- .container -->
-<div class="container">
-  <div class="four">:)</div>
-</div><!-- .container -->
-<div class="container">
-  <div class="five">:*</div>
-</div><!-- .container -->
+          <div class="one">;)</div>
+        </div><!-- .container -->
+        <div class="container">
+          <div class="two">:)</div>
+        </div><!-- .container -->
+        <div class="container">
+          <div class="three">:D</div>
+        </div><!-- .container -->
+        <div class="container">
+          <div class="four">:)</div>
+        </div><!-- .container -->
+        <div class="container">
+          <div class="five">:*</div>
+        </div><!-- .container -->
+      </div>
+      <div class="answer-btn-wrap">
+        <button type="button" class="btn btn-danger btn-lg" id="is_red">Red</button>
+        <button type="button" class="btn btn-success btn-lg" id="is_green">Green</button>
+      </div>
     </div>
-    <div class="answer-btn-wrap">
-      <button type="button" class="btn btn-danger btn-lg" id="is_red">Red</button>
-      <button type="button" class="btn btn-success btn-lg" id="is_green">Green</button>
-    </div>
-  </div>
 
-</div>
+  </div>
 </body>
 </html> 

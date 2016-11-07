@@ -1,4 +1,4 @@
-debug = true;
+debug = false;
 
 var selection_snd = new Audio("sounds/selection.mp3");
 var correct_snd = new Audio("sounds/correct.mp3");
@@ -47,7 +47,9 @@ function listWords() {
     document.getElementById("intro-wrap").style.display = 'none';
     document.getElementById("word-list-wrap").style.display = 'block';
     for (var i = 0; i < words.eyfsWords.length ; i++) {
-    document.getElementById("word-list").innerHTML += "<p class='"+ words.eyfsWords[i].colour + "'>" + words.eyfsWords[i].word + " </p><br>";
+        var rowColour = "table-danger";
+        if (words.eyfsWords[i].colour == "green"){rowColour = "table-success"};
+        document.getElementById("word-list").innerHTML += "<tr class='" + rowColour + "'><th scope='row'>" + [i] + "</th><td><p class='"+ words.eyfsWords[i].colour + "'>" + words.eyfsWords[i].word + " </p></td><td><p class='"+ words.eyfsWords[i].colour + "'>" + words.eyfsWords[i].colour + " </p></td></tr>";
     };
 };
 

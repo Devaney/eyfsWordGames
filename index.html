@@ -8,8 +8,7 @@
   <meta name="description" content="Red Green Word Game">
   <meta name="author" content="Liam Devaney">
   <link rel="stylesheet" href="css/styles.css?v=25-10-16">
-  <link rel="stylesheet" href="css/bootstrap.min.css?v=25-10-16">
-  <link rel="stylesheet" href="css/bootstrap-theme.min.css?v=25-10-16">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
   <script src="scripts/my.js"></script>
 <!--[if lt IE 9]>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
@@ -37,11 +36,21 @@
     </div>
 
     <div id="word-list-wrap">
-      <div id="back-btn"><a href="#" class="btn btn-default" onclick="restartGame()">Back</a></div>
-      <p id="word-list"></p>
+      <div id="back-btn"><button href="#" class="btn btn-default" onclick="restartGame()">Back</button><br><br></div>
+      <table class="table">
+        <thead>
+          <tr class="thead-inverse">
+            <th>#</th>
+            <th>Word</th>
+            <th>Colour</th>
+          </tr>
+        </thead>
+        <tbody id="word-list">
+        </tbody>
+      </table>
     </div>
     <div id="game-wrap">
-      <div id="back-btn"><a href="#" class="btn btn-default" onclick="restartGame()">Back</a></div>
+      <div id="back-btn"><button href="#" class="btn btn-default" onclick="restartGame()">Back</button></div>
       <div class="timer" id="timer">0 seconds</div>
       <div class="error-screen-block" id="error-screen-block">X
         <div class="sad">
@@ -73,7 +82,6 @@
         <button type="button" class="btn btn-success btn-lg" id="is_green">Green</button>
       </div>
     </div>
-
   </div>
 </body>
 </html> 

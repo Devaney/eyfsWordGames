@@ -18,10 +18,6 @@
   <div class="stage-wrap" onload="">
     <div id="intro-wrap">
       <h1 id="initial-intro"><span class="red-me">Red Word</span> or <span class="green-me">Green word</span></h1>
-      <div>
-        <table class="table table-striped" id="results-table">
-        </table>
-      </div>
       <div class="start-btn-wrap">
         <div class="left-column">
           <button type="button" class="btn btn-block btn-primary" id="start-game-10" onclick="startGame(90)">10 words</button>
@@ -31,12 +27,24 @@
           <button type="button" class="btn btn-block btn-primary" id="start-game-30" onclick="startGame(70)">30 words</button>
           <button type="button" class="btn btn-block btn-primary" id="start-game-100" onclick="startGame(0)">100 words</button>
         </div>
-          <button type="button" class="btn btn-block btn-default" id="list-all-words" onclick="listWords()">List all the words</button>
+        <button class="btn btn-block btn-default" id="results-table-link" onclick="showResultsTableBtn()">See how long each word took</button>
+        <button type="button" class="btn btn-block btn-default" id="list-all-words" onclick="listWords()">Look at all the words</button>
       </div>
     </div>
 
+    <div id="results-list-wrap">
+      <div id="results-back-btn">
+        <button href="#" class="btn btn-default" onclick="restartGame()">Back</button>
+        <br>
+        <br>
+      </div>
+      <table class="table table-striped" id="results-table"></table>
+    </div>
+
     <div id="word-list-wrap">
-      <div id="back-btn"><button href="#" class="btn btn-default" onclick="restartGame()">Back</button><br><br></div>
+      <div id="back-btn"><button href="#" class="btn btn-default" onclick="restartGame()">Back</button>
+        <br><br>
+      </div>
       <table class="table">
         <thead>
           <tr class="thead-inverse">
@@ -49,8 +57,9 @@
         </tbody>
       </table>
     </div>
+
     <div id="game-wrap">
-      <div id="back-btn"><button href="#" class="btn btn-default" onclick="restartGame()">Back</button></div>
+      <div id="game-back-btn"><button href="#" class="btn btn-default" onclick="restartGame()">Back</button></div>
       <div class="timer" id="timer">0 seconds</div>
       <div class="error-screen-block" id="error-screen-block">X
         <div class="sad">

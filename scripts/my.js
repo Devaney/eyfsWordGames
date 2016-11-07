@@ -1,4 +1,4 @@
-debug = false;
+debug = true;
 
 var selection_snd = new Audio("sounds/selection.mp3");
 var correct_snd = new Audio("sounds/correct.mp3");
@@ -59,7 +59,6 @@ function getNewWord() {
 
     if (debug == true) {
     document.getElementById("current-word").innerHTML = "<p class='"+ words.eyfsWords[correct_answers].colour + "'>" + words.eyfsWords[correct_answers].word + " </p>";
-    document.getElementById("results-table").style.display = 'block';
         } else{
           document.getElementById("current-word").innerHTML = "<p>" + words.eyfsWords[correct_answers].word + " </p>";
     };
@@ -79,7 +78,7 @@ function roundCountStart() {
 function answer() {
     if (this.classList.contains("correct_answer_btn")) {
         correct_snd.play();
-        addResultsTableRow('results-table', words.eyfsWords[correct_answers].word, endRoundTime);
+        addResultsTableRow('results-table', words.eyfsWords[correct_answers].word, endRoundTime);//FIXME endRoundTime uncaught referece error can casuse the first word to appear twice
         correct_answers++; //Add 1 to correct answers
         document.getElementById('happy-face-animation').style.display='block';
         setTimeout(function () {document.getElementById('happy-face-animation').style.display='none'}, 2000);
@@ -106,10 +105,22 @@ function endGame() {
     end_snd.play();
     stopTimer();
     getShuffledListOfWords();
+    showResultsTable();
+};
+
+function showResultsTable() {
+    document.getElementById("results-table-link").style.display = 'block';
+    document.getElementById("results-table").style.display = 'table';
+};
+
+function showResultsTableBtn() {
+    document.getElementById("results-list-wrap").style.display = 'block';
+    document.getElementById("intro-wrap").style.display = 'none';
 };
 
 function restartGame() {
     document.getElementById("intro-wrap").style.display = 'block';
+    document.getElementById("results-list-wrap").style.display = 'none';
     document.getElementById("game-wrap").style.display = 'none';
     document.getElementById("word-list-wrap").style.display = 'none';
     document.getElementById("is_red").classList.remove("correct_answer_btn");

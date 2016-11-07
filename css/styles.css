@@ -13,6 +13,12 @@ table{border-collapse:collapse;border-spacing:0}
 html {box-sizing: border-box;}
 *, *:before, *:after {box-sizing: inherit;}
 
+#results-table-link,
+#results-list-wrap {
+  display: none;
+}
+
+
 .left-column,
 .right-column {
   width: 46%;

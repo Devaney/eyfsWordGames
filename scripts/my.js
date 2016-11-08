@@ -1,4 +1,4 @@
-debug = true;
+debug = false;
 
 var selection_snd = new Audio("sounds/selection.mp3");
 var correct_snd = new Audio("sounds/correct.mp3");

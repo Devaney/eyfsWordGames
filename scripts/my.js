@@ -164,24 +164,3 @@ function addResultsTableRow(tableID, cellOne, cellTwo) {
     var secondNewText = document.createTextNode(cellTwo);
     secondNewCell.appendChild(secondNewText);
 }
-
-//sorting the results table
-// // Table data sorting starts....
-//   function sortData() {
-//       // Read table body node.
-//       var tableData = document.getElementById("data_table").getElementsByTagName("tbody").item(0);
-
-//       // Read table row nodes.
-//       var rowData = tableData.getElementsByTagName("tr");
-
-//       for(var i = 0; i < rowData.length - 1; i++) {
-//           for(var j = 0; j < rowData.length - (i + 1); j++) {
-
-//               //Swap row nodes if short condition matches
-//               if(parseInt(rowData.item(j).getElementsByTagName("td").item(0).innerHTML) > parseInt(rowData.item(j+1).getElementsByTagName("td").item(0).innerHTML)) {
-//                   tableData.insertBefore(rowData.item(j+1),rowData.item(j));
-//               }
-//           }
-//       }
-//   }
-//   // Table data sorting ends....

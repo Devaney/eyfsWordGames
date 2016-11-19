@@ -1,4 +1,5 @@
-debug = false;
+// set the debug flag by adding #debug to the URL
+debug = window.location.hash == "#debug";
 
 var selection_snd = new Audio("sounds/selection.mp3");
 var correct_snd = new Audio("sounds/correct.mp3");
